@@ -131,8 +131,26 @@ int main() {
 	string word = wordList[rand() % 5]; // randomly pick a word from the list
 	string guessedWord(word.length(), '_');
 
-	cout << "WELCOME TO HANGMAN!!!!!\n"; // welcome message
-    // Check if the game ended with a win or loss
+	cout << "WELCOME TO HANGMAN!!!!! (the start of the letter must include a captital FYI)\n"; // welcome message
+  
+	while (misses < MAX_INCORRECT && guessedWord != word) {
+		display(guessedWord);
+		cout << "Enter your guess: ";
+		char guess;
+		cin >> guess; // get the player's guess
+
+		string oldGuessedWord = guessedWord; // keep the track of the word before the guess
+		guessedWord = processGuess(guess, word, guessedWord); // Process the guess
+
+		if (guessedWord == oldGuessedWord) {
+			cout << "Oops! That letter isn't in there!\n"; // inform the player the guess was wrong
+		}
+		else {
+			cout << "Great guess!\n"; //Congratulate the player on a correct guess
+		}
+	} //end of game loop
+	
+	// Check if the game ended with a win or loss
 	if (guessedWord == word) {
 		cout << "CONGRATULATIONS! YOU GUESSED THE WORD: " << word << "\n"; // Win Message
 	}
@@ -142,21 +160,3 @@ int main() {
 
 	return 0; // End of the Program
 }//end of main
-
- // Game loop runs until the player runs out of guesses the word
-while (misses < MAX_INCORRECT && guessedWord != word) {
-	display(guessedWord);
-	cout << "Enter your guess: ";
-	char guess;
-	cin >> guess; // get the player's guess
-	
-	string oldGuessedWord = guessedWord; // keep the track of the word before the guess
-	guessedWord = processGuess(guess, word, guessedWord); // Process the guess
-
-	if (guessedWord == oldGuessedWord) {
-		cout << "Oops! That letter isn't in there!\n"; // inform the player the guess was wrong
-	}
-	else {
-		cout << "Great guess!\n"; //Congratulate the player on a correct guess
-	}
-} //end of game loop
